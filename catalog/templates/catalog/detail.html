@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block body_title %}
+<a href="/catalog/" style="margin-left: 0px;">Каталог</a> >>
+    <a href="{% url 'catalog:commodity' section.latin_name %}" style="margin-left: 0px;">{{ section.name }}</a> >>
+{% endblock %}
+{% block content %}
+<br />
+<p style="text-align: center;">{{ commodity.name }}</p>
+<br />
+<img src="{{ MEDIA_URL }}{{ commodity.img }}" width="20" height="20">
+{% autoescape off %}
+    {{ commodity.desc }}
+{% endautoescape %}
+    <br />
+    <p>Цветовые гаммы</p>
+    <br />
+    <div style="float: left; width:10%">
+        <div id="gallery_slider" style="float: left; width: 7%; margin-left: 3%; overflow: visible;">
+    {% for color in color_schemes %}
+        <img id="{{ color.id }}" src="{{ MEDIA_URL }}{{ color.img }}" width="50" height="50" alt="{{ color.name }}"
+                style="margin-left: 0;">
+        <br />
+    {% endfor %}
+        </div>
+    </div>
+    <div id="gallery" style="float: left; margin-left:0; line-height: 0px; width:85%; "></div>
+{% endblock %}

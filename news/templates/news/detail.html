@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block body_title %}
+<a href="/news/" style="margin-left: 0%;">Новости</a>
+{% endblock %}
+{% block content %}
+    <div style="padding-top: 2%; padding-left: 1%;">
+        {{ piece.name }}
+        <br />
+        <img src="{{ MEDIA_URL }}{{ piece.img }}" width="60" height="60">
+        <br />
+        {% autoescape off %}
+                {{ piece.desc }}
+        {% endautoescape %}
+    </div>
+{% endblock %}

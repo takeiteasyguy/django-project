@@ -1,0 +1,110 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+  	<title>SinDecor</title>
+
+    <!-- GALLERY -->
+    <script type="text/javascript" src="{% static "catalog/js/jquery-1.11.1.js" %}"></script>
+    <script type="text/javascript" src="{% static "catalog/js/jquery.capty.min.js" %}"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('img').click( function() {
+                if ($(this).attr('id').match(/\d+/)) {
+                    var Img = $(this).clone().css('width', '187px').css('height', '102px');
+                    $('#gallery').empty();
+                    Img.hide();
+                    $('#gallery').append(Img);
+                    Img.capty();
+                    Img.slideDown();
+                }
+            });
+
+            function boxShadow(element, number) {
+                number++;
+                if (number>2) { number = 1; }
+                console.log(number);
+                element.addClass('active' + number, 500);
+                element.attr('class', 'active' + number);
+                setTimeout(function(){boxShadow(element, number)}, 1000);
+            }
+            boxShadow($('#gallery_slider'), 0);
+
+            $(function(){
+                $('#inner-content-div').slimScroll({
+                    position: 'left',
+                    height: '500px',
+                    railVisible: true,
+                    alwaysVisible: true
+                });
+                $('#gallery_slider').slimScroll({
+                    position: 'left',
+                    height: '100px',
+                    railVisible: true
+                });
+            });
+
+            $('img#1').click();
+
+        })
+
+
+    </script>
+    <script type="text/javascript" src="{% static "catalog/js/jquery.slimscroll.min.js" %}"></script>
+    <link rel="shortcut icon" href="{{ STATIC_URL }}catalog/img/favicon.ico" />
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{% static "catalog/css/bootstrap.css" %}" />
+    <link rel="stylesheet" type="text/css" href="{% static "catalog/css/bootstrap-responsive.css" %}" />
+  </head>
+<body style="background: url({% static 'catalog/img/22a.jpg' %})">
+    <div class="container" style="margin-top: 1%;">
+        <div class="span3" style="margin-left: 0;"><a href='/' class="button rounded blue effect-5">Главная</a></div>
+        <div class="span3"><a href="/catalog/" class="button rounded blue effect-5">Каталог</a></div>
+        <div class="span3"><a href="/contact/" class="button rounded blue effect-5">Контакты</a></div>
+        <div class="span3"><a href="/sale/" class="button rounded blue effect-5">Акции</a></div>
+    </div>
+    <div class="container">
+    <div style="float:left; width:70%;" class="visible-desktop">
+        <h1 style="padding-left: 1%; padding-top: 0.5%; color: rgba(51, 51, 51, 1); text-shadow: 1px -1px 0 rgba(163, 145, 140, 1);">{% block body_title %}{% endblock %}</h1>
+        <div style='padding-left: 5%;' id="inner-content-div">{% block content %}{% endblock %}</div>
+    </div>
+    <div style="float:right; width:29%; margin-left: 1%; display: inline;">
+    <br />
+        <form method="get" action="/search/" name="quick_search">
+            <input type="search" name="q" placeholder="Введите текст">
+            &nbsp;
+            <input type="submit" value="Найти" class="blue" style="margin-bottom: 3%;
+                color: #FFFFFF; font-weight: bold">
+        </form>
+    <a href="/news/" style="padding-left: 35%">НОВОСТИ</a>
+    <br />
+        {% if news %}
+            {% for piece in news %}
+                <div style="display: table; padding-bottom: 3%">
+                    <div style="float: left;">
+                        <a href="{% url 'news:detail' piece.latin_name %}">
+                            <img src="{{ MEDIA_URL }}{{ piece.img }}" alt={{ piece.latin_name }} width="60" height="60"
+                                    style="padding-bottom: 1%">
+                        </a>
+                    </div>
+                    <div style="float: left;">
+                    <a href="{% url 'news:detail' piece.latin_name %}">
+                        {{ piece.name }}
+                        <br />
+                        &nbsp;&nbsp;{{ piece.pub_date|date:"d.m.Y" }}
+                        </a>
+                    <br />
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+  </div>
+      <footer style="padding-top: 1.5%;">
+<p style="color: white; float:right;">Developed by Adasenko Aleksandr <a href="mailto:djangobanga@gmail.com">
+    djangobanga@gmail.com</a>
+  </footer>
+  </body>
+</html>

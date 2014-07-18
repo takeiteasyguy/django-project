@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block body_title %}
+Новости
+{% endblock %}
+{% block content %}
+    <br />
+{% for piece in news_list %}
+    <div style="display: table; padding-bottom: 3%">
+        <div style="float: left;">
+            <a href="{% url 'news:detail' piece.latin_name %}">
+                <img src="{{ MEDIA_URL }}{{ piece.img }}" alt={{ piece.latin_name }} width="60" height="60"
+                        style="padding-bottom: 1%">
+            </a>
+        </div>
+        <div style="float: left;">
+        <a href="{% url 'news:detail' piece.latin_name %}">
+            {{ piece.name }}
+            <br />
+            &nbsp;&nbsp;{{ piece.pub_date|date:"d.m.Y" }}
+            </a>
+        <br />
+        </div>
+    </div>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block body_title %}
+Каталог
+{% endblock %}
+{% block content %}
+<br />
+<table border="0">
+    <tr>
+{% for section in section_list %}
+        <td>
+        <a href="{% url 'catalog:commodity' section.latin_name %}">
+            <img src="{{ MEDIA_URL }}{{ section.img }}" width="60" height="60" style="border: 1px solid black;">
+        </a>
+        <a href="{% url 'catalog:commodity' section.latin_name %}">{{ section.name }}</a>
+    </td>
+    {% if forloop.counter|divisibleby:2 %}
+        </tr><tr>
+    {% endif %}
+{% endfor %}
+    </table>
+{% endblock %}

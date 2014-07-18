@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block body_title %}
+    Свяжитесь с нами
+{% endblock %}
+{% block content %}
+        <br />
+    <p>Адрес: г. Минск, ул. Краснозвездная, 1а, 23</p>
+    <p>Телефоны: +375336290466  +375628560487</p>
+    <p>Режим работы: от заката до рассвета</p>
+    <div style="padding-left: 15px"><script type="text/javascript" charset="utf-8"
+                                            src="//api-maps.yandex.ru/services/constructor/1.0/js/?sid=Cv8am1ODkWQ4kYwPVlFkHi_g8g8I3xUo&width=600&height=290"></script>
+    </div>
+    <br />
+    {{ sended }}
+{% block form %}
+    <div class="feedback">
+        <form method="POST" action="">
+            {% csrf_token %}
+            <div class="form">
+                {{ form }}
+            </div>
+            <input type="submit" value="Отправить сообщение" class="blue" style="margin-bottom: 10px;
+                color: #FFFFFF; font-weight: bold">
+        </form>
+    </div>
+{% endblock %}
+{% endblock %}
